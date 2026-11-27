@@ -1543,6 +1543,13 @@ img { max-width: 100%; height: auto; display: block; }
 .registration-process-card a:nth-of-type(4) > span { background: #3a13b8; }
 .registration-process-card a:nth-of-type(5) > span { background: #078d73; }
 .registration-process-card a b { font-size: 10px; }
+.registration-process-top { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 12px 14px; }
+.registration-process-top h2 { grid-column: 1 / -1; margin-bottom: 4px; }
+.registration-process-top a { min-height: 52px; padding: 6px 10px; border: 1px solid #d6d9ff; border-radius: 10px; background: rgba(255,255,255,.85); text-decoration: none; transition: background .15s ease, border-color .15s ease; }
+.registration-process-top a:hover { background: #eceaff; border-color: #a4a8f4; }
+.registration-process-top a:not(:last-child)::after { display: none; }
+.registration-process-top a > span { width: 28px; height: 28px; flex-basis: 28px; font-size: 13px; }
+.registration-process-top a b { font-size: 11px; }
 .registration-help-card { padding: 10px; border-color: #d9dcff; border-radius: 10px; background: rgba(255,255,255,.72); }
 .registration-help-card h3 { margin-top: 6px; font-size: 12px; }
 .registration-help-card p, .registration-help-card ul { font-size: 9px; }

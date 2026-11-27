@@ -155,12 +155,36 @@ if (form) {
                 indicator.removeAttribute("aria-current");
             }
         });
-        previousButton.hidden = currentStep === 0;
-        nextButton.hidden = currentStep === steps.length - 1;
-        submitButton.hidden = currentStep !== steps.length - 1;
-        stepCount.textContent = `चरण ${currentStep + 1} / ${steps.length}`;
-        message.hidden = true;
+        previousButton && (previousButton.hidden = currentStep === 0);
+        nextButton && (nextButton.hidden = currentStep === steps.length - 1);
+        submitButton && (submitButton.hidden = currentStep !== steps.length - 1);
+        if (stepCount) stepCount.textContent = `चरण ${currentStep + 1} / ${steps.length}`;
+        if (message) message.hidden = true;
     };
+
+    const processLinks = Array.from(document.querySelectorAll(".registration-process-top a"));
+    const businessForm = document.querySelector("#business-details-form");
+    const businessTab = document.querySelector("[data-process-business]");
+
+    processLinks.forEach((link, linkIndex) => {
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (businessTab && link === businessTab) {
+                form.style.display = "none";
+                if (businessForm) businessForm.style.display = "";
+                if (businessForm) businessForm.scrollIntoView({ behavior: "smooth", block: "start" });
+                return;
+            }
+            form.style.display = "";
+            if (businessForm) businessForm.style.display = "none";
+            updateFormStep(linkIndex);
+            form.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+    });
+
+    if (businessForm && businessTab) {
+        businessForm.style.display = "none";
+    }
 
     const validateStep = (stepIndex) => {
         const fields = Array.from(steps[stepIndex].querySelectorAll("input, select, textarea"));
@@ -229,7 +253,7 @@ if (form) {
         input.addEventListener("input", updateApplicationCostValidity);
     });
 
-    if (!singlePage) {
+    if (!singlePage && nextButton && previousButton) {
         nextButton.addEventListener("click", () => {
             if (currentStep === 1) {
                 updateConditionalFields();
@@ -307,6 +331,45 @@ if (registrationForm) {
     registrationForm.addEventListener("reset", () => {
         message.hidden = true;
         message.textContent = "";
+    });
+}
+
+const passwordLoginForm = document.querySelector("#password-login-form");
+
+if (passwordLoginForm) {
+    const message = passwordLoginForm.querySelector("[data-password-login-message]");
+
+    passwordLoginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const invalidField = Array.from(passwordLoginForm.elements).find(
+            (field) => field.willValidate && !field.checkValidity()
+        );
+        if (invalidField) {
+            invalidField.reportValidity();
+            invalidField.focus();
+            return;
+        }
+
+        message.textContent = "";
+        message.hidden = true;
+        window.localStorage.setItem("ekal-mahila-logged-in", "true");
+        window.location.href = "userdashboard.html";
+    });
+
+    passwordLoginForm.addEventListener("reset", () => {
+        message.hidden = true;
+        message.textContent = "";
+    });
+}
+
+const loggedIn = window.localStorage.getItem("ekal-mahila-logged-in") === "true";
+
+if (loggedIn) {
+    document.querySelectorAll('.primary-navigation .nav-link, .registration-login, a[href="login.html"], a[href="Registraiton.html"], a[href="registration.html"]').forEach((link) => {
+        link.style.display = "none";
+    });
+    document.querySelectorAll('.registration-brand, .brand').forEach((logo) => {
+        logo.style.pointerEvents = "none";
     });
 }
 
