@@ -284,6 +284,32 @@ if (form) {
     updateFormStep(0);
 }
 
+const registrationForm = document.querySelector("#registration-form");
+
+if (registrationForm) {
+    const message = registrationForm.querySelector("[data-registration-message]");
+
+    registrationForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const invalidField = Array.from(registrationForm.elements).find(
+            (field) => field.willValidate && !field.checkValidity()
+        );
+        if (invalidField) {
+            invalidField.reportValidity();
+            invalidField.focus();
+            return;
+        }
+
+        message.textContent = "यह डेमो प्रारूप है। आपकी जानकारी जमा या कहीं भेजी नहीं गई है।";
+        message.hidden = false;
+    });
+
+    registrationForm.addEventListener("reset", () => {
+        message.hidden = true;
+        message.textContent = "";
+    });
+}
+
 const businessForm = document.querySelector("#business-details-form");
 
 if (businessForm) {

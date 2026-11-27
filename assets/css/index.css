@@ -1464,6 +1464,7 @@ img { max-width: 100%; height: auto; display: block; }
 .registration-application { padding: 12px 0 30px; background: linear-gradient(135deg, #f8f8ff 0%, #efefff 56%, #f6f7ff 100%); }
 .registration-layout { display: grid; grid-template-columns: 148px minmax(0, 1fr); align-items: start; gap: 14px; }
 .registration-content { grid-column: 2; grid-row: 1; min-width: 0; display: grid; gap: 18px; }
+.registration-centered-content { width: min(100%, 880px); margin-inline: auto; }
 .registration-form { grid-column: auto; grid-row: auto; min-width: 0; padding: 10px; border: 1px solid #d5d9ff; border-radius: 14px; background: rgba(255,255,255,.92); box-shadow: 0 3px 12px rgba(50, 44, 153, .13); }
 .registration-form .form-topline { display: none; }
 .registration-form .form-notice { margin: 0 0 8px; padding: 7px 9px; border-color: #e0e3ff; border-radius: 8px; background: #f5f5ff; }
